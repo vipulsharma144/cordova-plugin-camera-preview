@@ -351,7 +351,6 @@ public class CameraActivity extends Fragment {
   public void switchCamera() {
     // Find the total number of cameras available
     numberOfCameras = Camera.getNumberOfCameras();
-
     // check for availability of multiple cameras
     if (numberOfCameras == 1) {
       //There is only one camera available
@@ -397,8 +396,10 @@ public class CameraActivity extends Fragment {
       }
 
       mPreview.switchCamera(mCamera, cameraCurrentlyLocked);
+      cameraParameters = mCamera.getParameters();
 
       mCamera.startPreview();
+      eventListener.onSwitchCameraSuccess();
     }
   }
 
@@ -852,6 +853,7 @@ public class CameraActivity extends Fragment {
       Math.round((y + 100) * 2000 / height - 1000)
     );
   }
+
 
   static Camera.Size getBestResolution(Camera.Parameters cp) {
     List<Camera.Size> sl = cp.getSupportedVideoSizes();
